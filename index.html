@@ -9,12 +9,20 @@
     <title>Tic-Tac-Toe</title>
 </head>
 <body>
+    <div id="playerChoice">
+        <form>
+            <p style="text-align: center;">Take a Pick</p>
+            <button type="button">X</button>
+            <button type="button">O</button>
+        </form>
+    </div>
     <h1 style="text-align: center;">TIC-TAC-TOE</h1>
+
     <main>
         <div id="gameboard"></div>
         <div class="choice">
-            <button class="notClicked" id="x-btn" data-click="no">X</button>
-            <button class="clicked" id="o-btn" data-click="yes">O</button>
+            <button disabled class="notClicked" id="x-btn" data-click="no">X</button>
+            <button disabled class="notClicked" id="o-btn" data-click="no">O</button>
         </div>
     </main>
 </body>

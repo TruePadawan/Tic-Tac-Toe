@@ -1,61 +1,101 @@
+let playerOptions = document.querySelectorAll('form button');
+playerOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        user.choice = option.textContent;
+        player2.choice = option.textContent === "X" ? "O" : "X";
+
+        if (option.textContent === "X")
+        {
+            xBtn.dataset.click = "yes";
+            xBtn.className = "clicked";
+        }else {
+            oBtn.dataset.click = "yes";
+            oBtn.className = "clicked";
+        }
+
+        document.getElementById('playerChoice').style.display = "none";
+    });
+});
+
 let xBtn = document.getElementById('x-btn');
 let oBtn = document.getElementById('o-btn');
 
-xBtn.addEventListener('click', () => {
-    if (xBtn.dataset.click != "yes")
-    {
-        xBtn.dataset.click = "yes";
-        oBtn.dataset.click = "no";
+// MAIN CONTROLLER MODULE -- IIFE
 
-        oBtn.className = "notClicked";
-        xBtn.className = "clicked"
+let mainController = (() => {
+
+    let currentPlayer = {};
+
+    const switchPlayer = () => {
+        if (currentPlayer.name === user.name)
+        {
+            currentPlayer = player2;
+        }
+        else {
+            currentPlayer = user;
+        }
     }
-});
 
-oBtn.addEventListener('click', () => {
-    if (oBtn.dataset.click != "yes")
-    {
-        oBtn.dataset.click = "yes";
-        xBtn.dataset.click = "no";
+    const setCurrentPlayer = (playerObj) => {
+        currentPlayer = playerObj;
+    };
 
+    const getCurrentPlayer = () => currentPlayer;    
+
+    const xPlayed = () => {
         xBtn.className = "notClicked";
         oBtn.className = "clicked";
-    }
-});
 
-// GAMEBOARD AND DISPLAY CONTROLLER MODULE -- IIFE
-let GameBoard = (() => {
-    // let blocksArray = ["O","X","X","O","O","X","X","O","O"];
-    let blocksArray = [];
+        switchPlayer();
+    }
+
+    const oPlayed = () => {
+        oBtn.className = "notClicked";
+        xBtn.className = "clicked";
+
+        switchPlayer();
+    }
 
     return {
-        blocks: blocksArray
+        getCurrentPlayer,
+        setCurrentPlayer,
+        xPlayed,
+        oPlayed
     }
 })();
 
-let displayController = (() => {
+// FUNCTION FOR BUILDING THE GAMEBOX UI
+const buildGameBoard = () => {
     let gameboard = document.getElementById('gameboard');
 
-    const buildGameBoard = (blocksArr) => {
+    for (let i = 0; i < 9; ++i)
+    {
+        let block = document.createElement('button');
+        block.className = "block";
+        block.dataset.index = i;
 
-        for (let i = 0; i < 9; ++i)
-        {
-            let block = document.createElement('button');
-            block.className = "block";
-            block.dataset.index = i;
-            block.addEventListener('click', playerChoiceHandler);
+        block.addEventListener('click', () => {
             
-            gameboard.appendChild(block);
-        }
+            if (block.textContent === "")
+            {
+                block.textContent = mainController.getCurrentPlayer().choice;
+                
+                if (mainController.getCurrentPlayer().choice === "X")
+                {
+                    mainController.xPlayed();
+                }else
+                {
+                    mainController.oPlayed();
+                }
+            }
+        });
 
+        gameboard.appendChild(block);
     }
 
-    return {
-        buildGameBoard
-    }
-})();
+}
 
-// FACTORY FUNCTION FOR PLAYERS
+// FACTORY FUNCTION FOR CREATING PLAYERS
 const createPlayer = (name) => {
     return {
         name,
@@ -63,9 +103,8 @@ const createPlayer = (name) => {
     }
 };
 
-const playerChoiceHandler = () => {
-
-}
-
-displayController.buildGameBoard(GameBoard.blocks);
 let user = createPlayer('Hermes');
+let player2 = createPlayer('player2');
+mainController.setCurrentPlayer(user);
+
+buildGameBoard();

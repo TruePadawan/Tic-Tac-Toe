@@ -8,10 +8,47 @@ html {
     padding: 0;
 }
 
+h1 {
+    font-family: monospace;
+}
+
 main {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+#playerChoice {
+    z-index: 1;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.719);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    z-index: 2;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+form p {
+    margin: 10px;
+    color: burlywood;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+form button {
+    font-size: 40px;
+    width: 100px;
+    height: 60px;
+    border: 1px solid grey;
+    background-color: lightyellow;
 }
 
 #gameboard {
