@@ -15,6 +15,7 @@ h1 {
 main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -52,7 +53,6 @@ form button {
 }
 
 #gameboard {
-    margin: 0 auto;
     width: 40rem;
     height: 25rem;
     max-width: 97%;
@@ -66,7 +66,6 @@ form button {
 }
 
 .choice {
-    align-self: center;
     display: flex;
     gap: 1rem;
 }
@@ -79,6 +78,11 @@ form button {
     width: 100px;
     height: 60px;
     border: 1px solid grey;
+}
+
+#gameInfo {
+    font-family: 'Franklin Gothic Medium';
+    font-size: 2rem;
 }
 
 .notClicked {

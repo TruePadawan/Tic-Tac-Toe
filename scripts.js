@@ -1,4 +1,6 @@
 let playerOptions = document.querySelectorAll('form button');
+
+// LOGIC FOR GETTING THE USERS CHOICE = X OR O
 playerOptions.forEach(option => {
     option.addEventListener('click', () => {
         user.choice = option.textContent;
@@ -6,10 +8,8 @@ playerOptions.forEach(option => {
 
         if (option.textContent === "X")
         {
-            xBtn.dataset.click = "yes";
             xBtn.className = "clicked";
         }else {
-            oBtn.dataset.click = "yes";
             oBtn.className = "clicked";
         }
 
@@ -21,10 +21,12 @@ let xBtn = document.getElementById('x-btn');
 let oBtn = document.getElementById('o-btn');
 
 // MAIN CONTROLLER MODULE -- IIFE
+/* HANDLES THE LOGIC FOR SWITCHING BETWEEN PLAYER 1 AND 2, RETRIEVING THE CURRENT PLAYER AND WHAT HAPPENS WHEN A PLAYER MAKES A MOVE */
 
 let mainController = (() => {
 
     let currentPlayer = {};
+    let noOfMoves = 0;
 
     const switchPlayer = () => {
         if (currentPlayer.name === user.name)
@@ -42,7 +44,11 @@ let mainController = (() => {
 
     const getCurrentPlayer = () => currentPlayer;    
 
+    const incrementMoves = () => ++noOfMoves;
+    const getNoOfMoves = () => noOfMoves;
+
     const xPlayed = () => {
+        incrementMoves();
         xBtn.className = "notClicked";
         oBtn.className = "clicked";
 
@@ -50,6 +56,7 @@ let mainController = (() => {
     }
 
     const oPlayed = () => {
+        incrementMoves();
         oBtn.className = "notClicked";
         xBtn.className = "clicked";
 
@@ -59,6 +66,8 @@ let mainController = (() => {
     return {
         getCurrentPlayer,
         setCurrentPlayer,
+        incrementMoves,
+        getNoOfMoves,
         xPlayed,
         oPlayed
     }
