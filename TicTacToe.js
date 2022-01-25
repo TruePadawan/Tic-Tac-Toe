@@ -6,25 +6,25 @@ const checkHorizontal = (board) => {
 
         for (let j = 0; j < board.length; ++j)
         {
-            if (board[i][j] === "") break; // IF ANY INDEX IN THAT ROW IS EMPTY, SKIP THAT ROW
+            if (board[i][j].textContent === "") break; // IF ANY INDEX IN THAT ROW IS EMPTY, SKIP THAT ROW
             row.push([i,j]);
         }
 
         if (row.length === 3)
         {
-            console.table(row);
-            if (row.every((item) => board[item[0]][item[1]] === 'x'))
+            if (row.every((item) => board[item[0]][item[1]].textContent === 'X'))
             {
+                
                 return {
                     indexes : row,
-                    winner : 'x'
+                    winner : 'X'
                 };
             }
-            else if (row.every((item) => board[item[0]][item[1]] === 'o'))
+            else if (row.every((item) => board[item[0]][item[1]].textContent === 'O'))
             {
                 return {
                     indexes : row,
-                    winner : 'o'
+                    winner : 'O'
                 };
             }
         }
@@ -42,24 +42,24 @@ const checkVertical = (board) => {
 
         for (let j = 0; j < board.length; ++j)
         {
-            if (board[j][i] === "") break; // IF ANY INDEX IN THAT COL IS EMPTY, SKIP THAT ROW
+            if (board[j][i].textContent === "") break; // IF ANY INDEX IN THAT COL IS EMPTY, SKIP THAT ROW
             col.push([j,i]);
         }
 
         if (col.length === 3)
         {
-            if (col.every((item) => board[item[0]][item[1]] === 'x'))
+            if (col.every((item) => board[item[0]][item[1]].textContent === 'X'))
             {
                 return {
                     indexes: col,
-                    winner : 'x'
+                    winner : 'X'
                 }
             }
-            else if (col.every((item) => board[item[0]][item[1]] === 'o'))
+            else if (col.every((item) => board[item[0]][item[1]].textContent === 'O'))
             {
                 return {
                     indexes: col,
-                    winner : 'o'
+                    winner : 'O'
                 }
             }
         }
@@ -70,29 +70,29 @@ const checkVertical = (board) => {
     }
 }
 
-const checkDiagonal = () => {
+const checkDiagonal = (board) => {
     let diagonal = [];
     // CHECK LEFT DIAGONAL
     for (let i = 0; i < board.length; ++i)
     {
-        if (board[i][i] === '') break;
+        if (board[i][i].textContent === '') break;
         diagonal.push([i,i]);
     }
 
     if (diagonal.length === 3)
     {
-        if (diagonal.every(item => board[item[0]][item[1]] === 'x'))
+        if (diagonal.every(item => board[item[0]][item[1]].textContent === 'X'))
         {
             return {
                 indexes: diagonal,
-                winner: 'x'
+                winner: 'X'
             }
         }
-        else if (diagonal.every(item => board[item[0]][item[1]] === 'o'))
+        else if (diagonal.every(item => board[item[0]][item[1]].textContent === 'O'))
         {
             return {
                 indexes: diagonal,
-                winner: 'o'
+                winner: 'O'
             }
         }
     }
@@ -101,24 +101,24 @@ const checkDiagonal = () => {
     // CHECK RIGHT DIAGONAL
     for (let i = 0; i < board.length; ++i)
     {
-        if (board[2-i][i] == '') break;
+        if (board[2-i][i].textContent == '') break;
         diagonal.push([2 - i,i]);
     }
 
     if (diagonal.length === 3)
     {
-        if (diagonal.every(item => board[item[0]][item[1]] === 'x'))
+        if (diagonal.every(item => board[item[0]][item[1]].textContent === 'X'))
         {
             return {
                 indexes: diagonal,
-                winner: 'x'
+                winner: 'X'
             }
         }
-        else if (diagonal.every(item => board[item[0]][item[1]] === 'o'))
+        else if (diagonal.every(item => board[item[0]][item[1]].textContent === 'O'))
         {
             return {
                 indexes: diagonal,
-                winner: 'o'
+                winner: 'O'
             }
         }
     }
