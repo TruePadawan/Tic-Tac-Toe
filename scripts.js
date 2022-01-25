@@ -1,19 +1,25 @@
 import tictactoe from './TicTacToe.js';
 
 let board = [[],[],[]];
+let resetBtn = document.getElementById('resetBtn');
 let playerOptions = document.querySelectorAll('form button');
 
 // LOGIC FOR GETTING THE USERS CHOICE = X OR O
 playerOptions.forEach(option => {
     option.addEventListener('click', () => {
-        user.choice = option.textContent;
-        player2.choice = option.textContent === "X" ? "O" : "X";
+
+        let user = createPlayer('Hermes',option.textContent);
+        let player2 = createPlayer('player2',option.textContent === "X" ? "O" : "X");
+
+        mainController.setCurrentPlayer(user);
 
         if (option.textContent === "X")
         {
             xBtn.className = "clicked";
+            oBtn.className = "notClicked";
         }else {
             oBtn.className = "clicked";
+            xBtn.className = "notClicked";
         }
 
         document.getElementById('playerChoice').style.display = "none";
@@ -42,14 +48,30 @@ let mainController = (() => {
         }
     }
 
-    const switchPlayer = () => {
-        if (currentPlayer.name === user.name)
+    const resetGame = () => {
+        document.getElementById('playerChoice').style.display = "flex";
+        document.getElementById('gameInfo').textContent = "PREPPING..";
+
+        noOfMoves = 0;
+
+        for (let i = 0; i < board.length; ++i)
         {
-            currentPlayer = player2;
+            for (let j = 0; j < board[i].length; ++j)
+            {
+                board[i][j].textContent = "";
+                board[i][j].style.color = 'black';
+                board[i][j].removeAttribute('disabled');
+            }
         }
-        else {
-            currentPlayer = user;
+    }
+
+    const switchPlayer = () => {
+        if (currentPlayer.choice === "X")
+        {
+            currentPlayer.choice = "O";
+            return;
         }
+        currentPlayer.choice = "X";
     }
 
     const setCurrentPlayer = (playerObj) => {
@@ -60,7 +82,7 @@ let mainController = (() => {
 
     const incrementMoves = () => {
         ++noOfMoves;
-        if (noOfMoves >= 5)
+        if (noOfMoves >= 5 && noOfMoves < 9)
         {
             let possibleWin = tictactoe(board);
             if (possibleWin != -1)
@@ -76,8 +98,12 @@ let mainController = (() => {
                 document.getElementById('gameInfo').textContent = `${possibleWin.winner} wins!`;
             }
         }
+        else if (noOfMoves === 9)
+        {
+            gameOver();
+            document.getElementById('gameInfo').textContent = "A Tie!";
+        }
     };
-    const getNoOfMoves = () => noOfMoves;
 
     const xPlayed = () => {
         incrementMoves();
@@ -99,11 +125,15 @@ let mainController = (() => {
         getCurrentPlayer,
         setCurrentPlayer,
         incrementMoves,
-        getNoOfMoves,
         xPlayed,
-        oPlayed
+        oPlayed,
+        resetGame
     }
 })();
+
+resetBtn.addEventListener('click', () => {
+    mainController.resetGame();
+});
 
 // FUNCTION FOR BUILDING THE GAMEBOX UI
 const buildGameBoard = () => {
@@ -141,15 +171,11 @@ const buildGameBoard = () => {
 }
 
 // FACTORY FUNCTION FOR CREATING PLAYERS
-const createPlayer = (name) => {
+const createPlayer = (name,choice) => {
     return {
         name,
-        choice: ""
+        choice
     }
 };
-
-let user = createPlayer('Hermes');
-let player2 = createPlayer('player2');
-mainController.setCurrentPlayer(user);
 
 buildGameBoard();
