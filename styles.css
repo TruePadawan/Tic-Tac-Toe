@@ -61,11 +61,22 @@ form button {
     max-width: 97%;
     display: flex;
     flex-wrap: wrap;
+    gap: 3px;
 }
 
 .block {
     width: calc(100%/3 - 4px);
     height: calc(100%/3 - 4px);
+    border: 1px solid black;
+    background-color: blanchedalmond;
+}
+
+.block:hover:not(.block:disabled) {
+    background-color: rgb(241, 205, 150);
+}
+
+.block:active:not(.block:disabled) {
+    background-color: blanchedalmond;
 }
 
 .choice {
