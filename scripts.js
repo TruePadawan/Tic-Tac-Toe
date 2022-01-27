@@ -55,6 +55,31 @@ let mainController = (() => {
 
     let noOfMoves = 0;
 
+    const getRandomNum = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const playAI = () => {
+        // GET THE UNPLAYED ITEMS IN THE GAMEBOARD
+        // PICK ONE AT RANDOM AND SIMULATE A CLICK ON IT
+        let unplayedBlocks = [];
+
+        for (let i = 0; i < board.length; ++i)
+        {
+            for (let j = 0; j < board[i].length; ++j)
+            {
+                if (board[i][j].textContent === "")
+                {
+                    unplayedBlocks.push(board[i][j]);
+                }
+            }
+        }
+
+        let randomIndex = getRandomNum(0,unplayedBlocks.length-1);
+        unplayedBlocks[randomIndex].click();
+    }
+
+    // IN CASE OF A TIE - END GAME
     const gameOver = () => {
         document.getElementById('gameInfo').textContent = "A Tie!";
         for (let i = 0; i < board.length; ++i)
@@ -83,6 +108,7 @@ let mainController = (() => {
         }
     }
 
+    // RUN THE GAMEBOARD THROUGH THE TIC-TAC-TOE LOGIC AND LOOK FOR A WIN
     const checkForWin = () => {
         let possibleWin = tictactoe(board);
         if (possibleWin != -1) {
@@ -97,15 +123,18 @@ let mainController = (() => {
         }
     }
 
+    // SWTICH CURRENT-PLAYER TO AI OR USER WHEN EITHER PLAYS
     const switchPlayer = () => {
         if (currentPlayer.choice === USER.choice)
         {
             currentPlayer = AI;
+            playAI();
             return;
         }
         currentPlayer = USER;
     }
 
+    // SET INITIAL PLAYERS
     const setPlayers = (user,ai) => {
         USER = user;
         currentPlayer = user;
@@ -113,6 +142,9 @@ let mainController = (() => {
     };
     
     const getCurrentPlayer = () => currentPlayer;    
+
+    /* INCREMENT MOVES, IF MOVES IS 5 OR MORE, THERE IS A POSSIBILITY OF A WIN.
+    IF 9 AND NO WIN, IT'S A TIE */
 
     const incrementMoves = () => {
         ++noOfMoves;
