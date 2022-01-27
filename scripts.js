@@ -3,15 +3,29 @@ import tictactoe from './TicTacToe.js';
 let board = [[],[],[]];
 let resetBtn = document.getElementById('resetBtn');
 let playerOptions = document.querySelectorAll('form button');
+let playerNameInput = document.querySelector('form input');
+
+playerNameInput.addEventListener('input', () => {
+    if (playerNameInput.value.trim().length >= 2)
+    {
+        playerOptions.forEach((option) => {
+            option.removeAttribute('disabled');
+        });
+        return;
+    }
+    playerOptions.forEach((option) => {
+        option.setAttribute('disabled', true);
+    });
+});
 
 // LOGIC FOR GETTING THE USERS CHOICE = X OR O
 playerOptions.forEach(option => {
     option.addEventListener('click', () => {
 
-        let user = createPlayer('Hermes',option.textContent);
-        let player2 = createPlayer('player2',option.textContent === "X" ? "O" : "X");
+        let user = createPlayer(playerNameInput.value,option.textContent);
+        let player2 = createPlayer('AI',option.textContent === "X" ? "O" : "X");
 
-        mainController.setCurrentPlayer(user);
+        mainController.setPlayers(user,player2);
 
         if (option.textContent === "X")
         {
@@ -35,10 +49,14 @@ let oBtn = document.getElementById('o-btn');
 
 let mainController = (() => {
 
+    let USER = {};
+    let AI = {};
     let currentPlayer = {};
+
     let noOfMoves = 0;
 
     const gameOver = () => {
+        document.getElementById('gameInfo').textContent = "A Tie!";
         for (let i = 0; i < board.length; ++i)
         {
             for (let j = 0; j < board[i].length; ++j)
@@ -65,43 +83,46 @@ let mainController = (() => {
         }
     }
 
-    const switchPlayer = () => {
-        if (currentPlayer.choice === "X")
-        {
-            currentPlayer.choice = "O";
-            return;
+    const checkForWin = () => {
+        let possibleWin = tictactoe(board);
+        if (possibleWin != -1) {
+            for (let i = 0; i < possibleWin.indexes.length; ++i) {
+                let row = possibleWin.indexes[i][0];
+                let index = possibleWin.indexes[i][1];
+
+                board[row][index].style.color = 'green';
+            }
+            gameOver();
+            document.getElementById('gameInfo').textContent = `${currentPlayer.name} wins!`;
         }
-        currentPlayer.choice = "X";
     }
 
-    const setCurrentPlayer = (playerObj) => {
-        currentPlayer = playerObj;
-    };
+    const switchPlayer = () => {
+        if (currentPlayer.choice === USER.choice)
+        {
+            currentPlayer = AI;
+            return;
+        }
+        currentPlayer = USER;
+    }
 
+    const setPlayers = (user,ai) => {
+        USER = user;
+        currentPlayer = user;
+        AI = ai;
+    };
+    
     const getCurrentPlayer = () => currentPlayer;    
 
     const incrementMoves = () => {
         ++noOfMoves;
         if (noOfMoves >= 5 && noOfMoves < 9)
         {
-            let possibleWin = tictactoe(board);
-            if (possibleWin != -1)
-            {
-                for (let i = 0; i < possibleWin.indexes.length; ++i)
-                {
-                    let row = possibleWin.indexes[i][0];
-                    let index = possibleWin.indexes[i][1];
-
-                    board[row][index].style.color = 'green';
-                }
-                gameOver();
-                document.getElementById('gameInfo').textContent = `${possibleWin.winner} wins!`;
-            }
+            checkForWin();
         }
         else if (noOfMoves === 9)
         {
             gameOver();
-            document.getElementById('gameInfo').textContent = "A Tie!";
         }
     };
 
@@ -123,7 +144,7 @@ let mainController = (() => {
 
     return {
         getCurrentPlayer,
-        setCurrentPlayer,
+        setPlayers,
         incrementMoves,
         xPlayed,
         oPlayed,

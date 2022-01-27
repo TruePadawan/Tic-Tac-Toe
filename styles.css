@@ -22,11 +22,17 @@ main {
     gap: 1rem;
 }
 
+body {
+    height: 100%;
+}
+
 #playerChoice {
     z-index: 1;
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: rgba(0, 0, 0, 0.719);
     display: flex;
     justify-content: center;
@@ -52,6 +58,11 @@ form button {
     height: 60px;
     border: 1px solid grey;
     background-color: lightyellow;
+}
+
+form input {
+    margin: 10px auto;
+    display: block;
 }
 
 #gameboard {
