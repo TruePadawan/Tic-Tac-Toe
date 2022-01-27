@@ -120,7 +120,9 @@ let mainController = (() => {
             }
             gameOver();
             document.getElementById('gameInfo').textContent = `${currentPlayer.name} wins!`;
+            return true;
         }
+        return false;
     }
 
     // SWTICH CURRENT-PLAYER TO AI OR USER WHEN EITHER PLAYS
@@ -154,7 +156,10 @@ let mainController = (() => {
         }
         else if (noOfMoves === 9)
         {
-            gameOver();
+            if (!checkForWin())
+            {
+                gameOver();
+            }
         }
     };
 
