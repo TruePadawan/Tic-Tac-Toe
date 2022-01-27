@@ -41,13 +41,13 @@ body {
 
 form {
     z-index: 2;
-    background-color: lightyellow;
+    background-color: lightgray;
     padding: 5px;
 }
 
 form p {
     margin: 10px;
-    color: brown;
+    color: rgb(151, 72, 15);
     font-weight: bold;
     font-family: sans-serif;
 }
@@ -63,6 +63,8 @@ form button {
 form input {
     margin: 10px auto;
     display: block;
+    width: 97%;
+    height: 25px;
 }
 
 #gameboard {
