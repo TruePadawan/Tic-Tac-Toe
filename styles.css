@@ -126,11 +126,12 @@ form input:focus {
 }
 
 .block {
+    background-color: #ffcd97;
+    box-shadow: 2px 2px #f5a855;
     width: calc(100%/3 - 4px);
     height: calc(100%/3 - 4px);
-    border: 1px solid black;
     border-radius: 10px;
-    background-color: blanchedalmond;
+    border: none;
 }
 
 .block:hover:not(.block:disabled) {
@@ -163,7 +164,6 @@ form input:focus {
 }
 
 #gameInfo {
-    font-family: 'Franklin Gothic Medium';
     font-size: 20px;
 }
 
