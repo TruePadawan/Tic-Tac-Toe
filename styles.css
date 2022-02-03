@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
 html {
     box-sizing: border-box;
@@ -34,37 +35,85 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.719);
+    background: #FFFDD0;
+    background: linear-gradient(to bottom, #FFFDD0 0%, #F0EEC1 100%);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+#playerChoice h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    color: coral;
+}
+
+h1 span {
+    font-family: 'Fredoka One', cursive;
+    color: tomato;
+}
+
 form {
+    max-width: 97%;
     z-index: 2;
-    background-color: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form div {
+    max-width: 99%;
     padding: 5px;
+    background-color: #ffdebb;
+    border: none;
+    border-radius: 10px;
+    width: 250px;
+    display: flex;
+    gap: 7px;
 }
 
 form p {
     margin: 10px;
-    color: rgb(151, 72, 15);
-    font-weight: bold;
+    color: lightsalmon;
+    font-family: 'Supermercado One', cursive;
+    letter-spacing: 2px;
+    font-size: large;
 }
 
-form button {
+form button { 
+    box-sizing: content-box;
+    flex-grow: 1;
+    border-radius: 10px;
     font-size: 40px;
-    width: 100px;
+    width: 70px;
     height: 60px;
-    border: 1px solid grey;
-    background-color: lightyellow;
+    border: none;
+    background-color: #f8dec2;
+    box-shadow: 1px 1px #ffba71;
+    font-family: 'Fredoka One', cursive;
+}
+
+form button:enabled {
+    background-color: #ffcd97;
+    cursor: pointer;
 }
 
 form input {
-    margin: 10px auto;
+    box-sizing: content-box;
+    border: 2px solid lightcoral;
+    padding: 4px;
+    border-radius: 10px;
+    margin: 10px 0;
     display: block;
     width: 97%;
-    height: 25px;
+    height: 30px;
+}
+
+form input:focus {
+    border: 2px solid transparent;
 }
 
 #gameboard {
@@ -80,6 +129,7 @@ form input {
     width: calc(100%/3 - 4px);
     height: calc(100%/3 - 4px);
     border: 1px solid black;
+    border-radius: 10px;
     background-color: blanchedalmond;
 }
 
@@ -98,6 +148,7 @@ form input {
 
 .block, .choice button {
     font-size: 40px;
+    font-family: 'Fredoka One', cursive;
 }
 
 #resetBtn {
