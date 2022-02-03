@@ -142,6 +142,10 @@ form input:focus {
     background-color: blanchedalmond;
 }
 
+.block:disabled {
+    color: black;
+}
+
 .choice {
     display: flex;
     gap: 1rem;

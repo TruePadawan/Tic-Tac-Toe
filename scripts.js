@@ -102,7 +102,6 @@ let mainController = (() => {
             for (let j = 0; j < board[i].length; ++j)
             {
                 board[i][j].textContent = "";
-                board[i][j].style.color = 'black';
                 board[i][j].removeAttribute('disabled');
             }
         }
